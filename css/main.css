@@ -1,0 +1,87 @@
+#ShimmyContainer {
+	/*padding-top:45px;*/
+	width: inherit;
+    position: inherit;
+    overflow: scroll;
+    /* Firefox */
+	height: -moz-calc(100% - 45px);
+	/* WebKit */
+	height: -webkit-calc(100% - 45px);
+	/* Opera */
+	height: -o-calc(100% - 45px);
+	/* Standard */
+	height: calc(100% - 45px);
+}
+
+img.profileImg {
+	width:70px;
+	height:70px;
+	float: left;
+}
+
+a.directMessage {
+	color: #3b5998;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+	text-align: center;
+	float: left;
+	height: 70px;
+    line-height: 70px;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+div.optionsholder {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 45px;
+	position: absolute;
+}
+
+div.shimmyhidden {
+	display: none;
+}
+
+ul.options {
+	height: 45px;
+	/*margin-bottom:2px;*/
+	list-style-type: none;
+	text-align: center;
+	line-height:45px;
+}
+
+li.option {
+	font-size: 17px;
+	color: #3b5998;
+	text-decoration: none;
+	padding:4px;
+	display: inline;
+}
+
+li.option:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+li.option.underline {
+	text-decoration: underline;
+}
+
+div.card {
+	height: 70px;
+	border: 3px solid;
+	border-radius: 2px;
+	border-color: #ecf0f1;
+	/*margin-bottom:2px;*/
+
+}
+
+div.nameholder {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 70px;
+}
