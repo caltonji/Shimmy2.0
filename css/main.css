@@ -1,26 +1,57 @@
-#ShimmyContainer {
-	/*padding-top:45px;*/
+
+div.alertify p.msg {
+	font-family: inherit !important;
+	font-size: 20px !important;
+}
+
+div.alertify input {
+	font-family: inherit !important;
+    font-size: 12px !important;
+}
+
+div.alertify button.ok:hover {
+	background-color: #81CFE0 !important;
+}
+
+div.alertify button.cancel:hover {
+	background-color: rgba(255, 0, 0, 0.5) !important;
+}
+
+div#reminders_container {
+	background-color: #ecf6ff;
+	position: relative;
+}
+
+div#recent_friends_container {
+	background-color: #ecf6ff;
+	position: relative;
+
+}
+
+.shimmy_panel {
+	/* Firefox */
+	height: -moz-calc(100% - 65px) !important;
+	/* WebKit */
+	height: -webkit-calc(100% - 65px) !important;
+	/* Opera */
+	height: -o-calc(100% - 65px) !important;
+	/* Standard */
+	height: calc(100% - 65px) !important;
 	width: inherit;
     position: inherit;
     overflow: scroll;
-    /* Firefox */
-	height: -moz-calc(100% - 45px);
-	/* WebKit */
-	height: -webkit-calc(100% - 45px);
-	/* Opera */
-	height: -o-calc(100% - 45px);
-	/* Standard */
-	height: calc(100% - 45px);
 }
 
 img.profileImg {
 	width:70px;
 	height:70px;
 	float: left;
+	border-top-left-radius: 2.22px;
+	border-bottom-left-radius: 2.22px;
 }
 
 a.directMessage {
-	color: #3b5998;
+	color: #34495E;
     cursor: pointer;
     text-decoration: none;
     font-size: 16px;
@@ -28,60 +59,264 @@ a.directMessage {
 	float: left;
 	height: 70px;
     line-height: 70px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 a:hover {
 	text-decoration: underline;
 }
+@font-face {
+    font-family: 'Lobster';
+    /*the next line needs to change before publishing*/
+    src: url('chrome-extension://__MSG_@@extension_id__/css/Lobster1.4.otf') format('truetype');
+}
 
-div.optionsholder {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 45px;
-	position: absolute;
+div#shimmy_logo {
+	font-family: 'Lobster';
+	background-color: #81CFE0;
+	color:#fff;
+	text-align:center;
+	width:100%;
+	height:28px;
+	font-size:23px;
+}
+
+
+div#options_holder {
+	height: 37px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+	align-items:center;
+    width: 100%;
+    position: static;
+    background-color: #81CFE0;
+    border-bottom: 1px solid rgba(0, 0, 0, .10);
+
+    position: relative;
+    z-index: 10;
+	/*-webkit-box-shadow: 0px 6px 11px -4px rgba(0,0,0,0.62);
+	-moz-box-shadow: 0px 6px 11px -4px rgba(0,0,0,0.62);
+	box-shadow: 0px 6px 11px -4px rgba(0,0,0,0.62);*/
 }
 
 div.shimmyhidden {
 	display: none;
 }
 
-ul.options {
-	height: 45px;
-	/*margin-bottom:2px;*/
-	list-style-type: none;
-	text-align: center;
-	line-height:45px;
+
+div.noti_bubble {
+	background-color: #ff0000;
+    font-size: 12px;
+    color: #fff;
+    font-weight: 700;
+    height: 14px;
+    padding: 1px 3px;
+    border-radius: 14px;
+
+    margin-top: -5px;
+    margin-left: -5px;
+    text-decoration: none !important;
 }
 
-li.option {
-	font-size: 17px;
-	color: #3b5998;
+div.noti_bubble:hover {
 	text-decoration: none;
-	padding:4px;
-	display: inline;
 }
 
-li.option:hover {
+div.option {
+	display:flex;
+	font-size: 17px;
+	color: #fff;
+	text-decoration: none;
+}
+
+div.option span:hover {
 	cursor: pointer;
 	text-decoration: underline;
 }
-li.option.underline {
+
+div.option.underline span {
 	text-decoration: underline;
 }
 
 div.card {
 	height: 70px;
-	border: 3px solid;
-	border-radius: 2px;
+	/*border: 1px solid;*/
+	/*border-radius: 2px;*/
 	border-color: #ecf0f1;
-	/*margin-bottom:2px;*/
-
+	background-color:#fff;
+	margin:6px 12px;
+	border-radius: 2.22px;
+	z-index:10;
+	position:relative;
 }
+
+div.reminder_card {
+	border: 2px solid rgba(255, 0, 0, 0.619608);
+	display:block;
+	border-radius: 3px;
+}
+
+div.new_recent_friends_message {
+	text-align:center;
+	height:20px;
+	font-size:15px;
+	margin: 12px 6px;
+	background: rgba(255, 0, 0, 0.5);
+	color:#fff;
+	z-index:5;
+	position: absolute;
+	top:0;
+}
+
+div.reminder_note {
+	color: rgb(231, 76, 60);
+	padding-left:2px;
+	height:17px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+a.reminder_message {
+	color: #34495E;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+	text-align: center;
+	float: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+div.no_notifications_message {
+	background-color: #ecf6ff;
+	border: 0px;
+	color: rgba(0, 0, 0, .5);
+	position: absolute;
+    margin: 18px 28px;
+}
+
+
+
+a.reminder_message:hover {
+	text-decoration: underline;
+}
+
+
 
 div.nameholder {
 	display: flex;
-	justify-content: center;
+	justify-content: space-around;
 	align-items: center;
 	height: 70px;
+	overflow:hidden;
+	padding-left: 10px;
 }
+
+
+div.friend_remove_icon {
+	color: #c8c8c8;
+	text-align:center;
+	line-height:70px;
+	height:70px;
+	font-size:22px;
+	float:right;
+	width:45px;
+}
+
+div.friend_remove_icon:hover {
+	color: #929292;
+	cursor: pointer;
+}
+
+div.whitespace {
+	height:30px;
+}
+div.reminder {
+	background-color: #e74c3c;
+	text-align: center;
+	padding:6px 12px;
+	margin-bottom:15px;
+}
+
+span.reminder_text {
+	line-height: 1.28em;
+	color: white;
+}
+
+div.reminder_link {
+	height: 36px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px;
+}
+
+div.reminder_remove_icon {
+	color: #c8c8c8;
+	text-align: center;
+	float: right;
+	font-size:22px;
+	padding:10px;
+}
+
+div.reminder_remove_icon:hover {
+	color: #929292;
+	cursor: pointer;
+}
+
+div#add_reminder_box {
+	text-align:center;
+	line-height:26px;
+	/*width:100%;*/
+	height:30px;
+	font-size:12px;
+	background: rgb(231, 76, 60);
+	color: white;
+	position: absolute;
+    margin-top: -30px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size: 14px;
+    font-weight: 400;
+    right:0;
+}
+
+div.add_reminder_text {
+
+}
+
+div.add_reminder_submit {
+
+}
+
+li.has_reminder {
+	border: solid 2px;
+    border-style: dashed;
+    border-color: rgba(255,0,0, 0.62);
+}
+
+div.button {
+	color: rgb(231, 76, 60);
+    background-color: #fff;
+    border: 2px solid rgb(231, 76, 60);
+    border-radius: 0;
+	padding-left:10px;
+	padding-right:10px;
+}
+
+div.button:hover {
+	cursor:pointer;
+	background-color: rgb(231, 76, 60);
+    color: #fff;
+}
+
+
