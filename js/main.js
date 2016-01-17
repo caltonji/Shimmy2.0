@@ -212,7 +212,7 @@ var addRecentFriendsToDom = function(numRecentFriends) {
         }
         if (numRecentFriends) {
             var message = buildNewRecentFriendsMessage(numRecentFriends);
-            addToStartOfRecentFriends(message);
+            $("#recent_friends_container").prepend(message);
         }
     });
 }
@@ -614,6 +614,11 @@ var updateRemindersNotification = function(num) {
 var getReminderFromStorage = function(convo, callback) {
     chrome.storage.sync.get('shimmy_reminders', function(result) {
         var reminders = result.shimmy_reminders;
+
+        if (!reminders) {
+            reminders = {};
+        }
+
         callback(reminders[convo]);
     });
 }
@@ -664,6 +669,10 @@ function sortByCreatedAt(a, b) {
 var removeReminderFromStorage = function(convo, callback) {
     chrome.storage.sync.get('shimmy_reminders', function(result) {
         var reminders = result.shimmy_reminders;
+        
+        if (!reminders) {
+            reminders = {};
+        }
 
         reminders[convo] = false;
         chrome.storage.sync.set({shimmy_reminders : reminders}, function() {
