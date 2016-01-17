@@ -10,7 +10,7 @@
 
  1. Check the checkbox labeled "Developer Mode" at the top
 
- 2. Click "Load Unpacked Extension..." and select the "Shimm2.0" directory you downloaded
+ 2. Click "Load Unpacked Extension..." and select the "Shimmy2.0-master" directory you downloaded
 
 3. Head over to [messenger.com](messenger.com) and start using Shimmy
 
