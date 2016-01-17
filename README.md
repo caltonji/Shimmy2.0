@@ -12,6 +12,6 @@
 
  2. Click "Load Unpacked Extension..." and select the "Shimmy2.0-master" directory you downloaded
 
-3. Head over to [messenger.com](messenger.com) and start using Shimmy
+3. Head over to [messenger.com](messenger.com) and start using Shimmy.  If you don't see the difference at first, click the "i" icon at the top right.
 
 ###### Shimmy can be used to help you manage your conversations by showing you your recent friends and by letting you set reminders on conversations.
