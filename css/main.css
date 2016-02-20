@@ -39,7 +39,7 @@ div#recent_friends_container {
 	height: calc(100% - 65px) !important;
 	width: inherit;
     position: inherit;
-    overflow: scroll;
+    /*overflow: scroll;*/
 }
 
 img.profileImg {
@@ -273,21 +273,31 @@ div.reminder_remove_icon:hover {
 div#add_reminder_box {
 	text-align:center;
 	line-height:26px;
-	/*width:100%;*/
-	height:30px;
+	width:100%;
+	/*height:30px;*/
 	font-size:12px;
 	background: rgb(231, 76, 60);
 	color: white;
-	position: absolute;
-    margin-top: -30px;
-
+	/*position: absolute;*/
     display:flex;
     justify-content:center;
     align-items:center;
-
     font-size: 14px;
     font-weight: 400;
-    right:0;
+    height:30px;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space:nowrap;
+    /*right:0;*/
+}
+
+
+
+div#reminder_cards {
+    overflow-y:scroll;
+    height: calc(100% - 30px);
+
 }
 
 div.add_reminder_text {
@@ -299,18 +309,26 @@ div.add_reminder_submit {
 }
 
 li.has_reminder {
-	border: solid 2px;
-    border-style: dashed;
+	border: solid 1px;
+    border-style: solid;
     border-color: rgba(255,0,0, 0.62);
 }
 
 div.button {
-	color: rgb(231, 76, 60);
+	color: rgb(52, 73, 94);
+    /*width:100%;*/
     background-color: #fff;
     border: 2px solid rgb(231, 76, 60);
     border-radius: 0;
 	padding-left:10px;
 	padding-right:10px;
+    text-overflow: ellipsis;
+    width: 100%;
+    overflow: hidden;
+}
+
+div.hidden {
+    display: none;
 }
 
 div.button:hover {

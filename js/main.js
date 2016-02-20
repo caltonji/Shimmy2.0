@@ -23,7 +23,10 @@ var recent_friends_container = `
 <div id="recent_friends_container" class="shimmyhidden shimmy_panel"></div>
 `;
 var reminders_container = `
-<div id="reminders_container" class="shimmyhidden shimmy_panel"></div>
+<div id="reminders_container" class="shimmyhidden shimmy_panel">
+<div id="add_reminder_box"></div>
+<div id="reminder_cards"></div>
+</div>
 `;
 
 var noRemindersMessage = `
@@ -40,8 +43,8 @@ var clearRecentFriendsContainer = function() {
 }
 
 var clearRemindersContainer = function() {
-    $(scrollable).find("#reminders_container").empty();
-    $(scrollable).find('#reminders_container').append(noRemindersMessage);
+    $(scrollable).find("#reminders_container").find('#reminder_cards').empty();
+    $(scrollable).find('#reminders_container').find('#reminder_cards').append(noRemindersMessage);
 }
 
 var scrollable;
@@ -51,7 +54,7 @@ var infoPanel;
 var remindersPanel;
 
 var options = `
-    <div id ="shimmy_logo">Shimmy</div>
+    <div id ="shimmy_logo" href="https://github.com/caltonji/Shimmy2.0">Shimmy</div>
     <div id="options_holder">
         <div class="option" id= "info_buttton"><span>Info</span></div>
         <div class="option" id= "reminders_button" title="Check your reminders">
@@ -230,7 +233,12 @@ var removeFriend = function(element) {
 }
 
 var updateRecentFriendsNotification = function(num) {
-    $('#recent_friends_noti').text(String(num));
+    if (num === 0) {
+        $('#recent_friends_noti').addClass('hidden');
+    } else {
+        $('#recent_friends_noti').removeClass('hidden');
+        $('#recent_friends_noti').text(String(num));
+    }
 }
 
 /*
@@ -357,8 +365,8 @@ var saveNewFriendsToStorage = function(newFriends, callback) {
 var setupReminders = function() {
     addConvoChangeListener();
     addConversationListListener();
-
     loadRemindersPanel();
+    // handleNewConvo();
 }
 
 var incrementRemindersNotification = function(num) {
@@ -394,24 +402,24 @@ var removeReminder = function(element) {
     // decrementRecentFriendsNotification();
 }
 
-var addReminderBox = `
-<div id="add_reminder_box" convo="stephen.song.4">
-    <div class="button add_reminder_button">Create Reminder for this Convo</div>
-</div>
-`;
-var insertAddReminderOrCancelReminder = function() {
-    $('#add_reminder_box').remove();
-    $('.whitespace').remove();
-    addAddReminderBox();
-}
+// var addReminderBox = `
+// <div id="add_reminder_box" convo="stephen.song.4">
+//     <div class="button add_reminder_button">Create Reminder for this Convo</div>
+// </div>
+// `;
+// var insertAddReminderOrCancelReminder = function() {
+//     $('#add_reminder_box').remove();
+//     $('.whitespace').remove();
+//     addAddReminderBox();
+// }
 
-var addAddReminderBox = function() {
-    waitForMessages(function() {
-        $('div[aria-label="New message"]').prepend(addReminderBox);
-        $('div[aria-label="Messages"]').append(whitespace);
-        // $('div[aria-label="Messages"]').animate({scrollTop: $('div[aria-label="Messages"]').height}, 'slow');
-    });
-}
+// var addAddReminderBox = function() {
+//     waitForMessages(function() {
+//         $('div[aria-label="New message"]').prepend(addReminderBox);
+//         $('div[aria-label="Messages"]').append(whitespace);
+//         // $('div[aria-label="Messages"]').animate({scrollTop: $('div[aria-label="Messages"]').height}, 'slow');
+//     });
+// }
 
 var reminderHandler = function() {
     console.log("handler caught");
@@ -464,7 +472,7 @@ var buildReminderCard = function(reminder) {
     var reminderCard = '<div class="reminder_card card">';
     reminderCard += '<div class="reminder_note" title="' + reminder.note + '">' + reminder.note + '</div>';
     reminderCard += '<div class="reminder_link">';
-    reminderCard += '<a class="reminder_message" title="Send a FB message to ' + reminder.name + '"href="https://www.messenger.com/t/' + reminder.convo + '">' + reminder.name + '</a>';
+    reminderCard += '<a class="reminder_message" title="Send a FB message to ' + reminder.name + '"href="https://www.messenger.com/t/' + reminder.convo + '">Message ' + reminder.name + '</a>';
     reminderCard += '<div class="reminder_remove_icon" title="Remove this reminder" convo="' + reminder.convo + '">X</div>';
     reminderCard += '</div>';
     reminderCard += '</div>';
@@ -488,7 +496,8 @@ var loadRemindersPanel = function() {
 }
 
 var addToStartOfReminders = function(card) {
-    $("#reminders_container").children().first().after(card);
+    $("#reminders_container").find('#reminder_cards').find('.no_notifications_message').remove();
+    $("#reminders_container").find('#reminder_cards').prepend(card);
 }
 
 
@@ -496,8 +505,22 @@ var iterateConvoList = function() {
     console.log("iterateConvo");
     $(conversationList).children().each(function() {
         var thisPanel = this;
-        var url = $(this).find('a').first().attr('href');
-        var convo = url.replace('https://www.messenger.com/t/', '');
+        var url = $(thisPanel).find('a').first().attr('href');
+        if (!url) {
+            url = $(thisPanel).find('a').first().attr('data-href');
+        }
+        if (url) {
+            var startIndex = url.lastIndexOf('%2F') + 3;
+            var upToIndex = url.lastIndexOf('&');
+            if (startIndex && upToIndex) {
+                var convo = url.substring(startIndex, upToIndex);
+                console.log({startIndex: startIndex, upToIndex: upToIndex, convo : convo});
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
         // console.log(convo);
         getReminderFromStorage(convo, function(reminder) {
             if (reminder) {
@@ -519,7 +542,7 @@ var addConvoChangeListener = function() {
     currentConvo = currentConvo.replace('http:\/\/www\.messenger\.com\/t\/','');
 
     currentConvoName = $('div[role="main"]').find('span').eq(1).text();
-
+    console.log({currentConvo : currentConvo, currentConvoName : currentConvoName});
     handleNewConvo();
 
     var observer = new MutationObserver(function(mutations, observer) {
@@ -546,8 +569,29 @@ var addConvoChangeListener = function() {
 
 var handleNewConvo = function() {
     console.log(currentConvo);
-    insertAddReminderOrCancelReminder();
+    insertReminderForThisConvo();
     // insertReminder();
+}
+
+var buildReminderButton = function() {
+    if (!currentConvo || !currentConvoName) {
+        return false;
+    } else {
+        var reminderButton = '<div class="button add_reminder_button">Create Reminder for Convo with ' + currentConvoName + '</div>';
+        return reminderButton;
+    }
+}
+
+var insertReminderForThisConvo = function() {
+    console.log("in insert reminder");
+    console.log({currentConvo : currentConvo, currentConvoName : currentConvoName});
+    var reminderButton = buildReminderButton();
+    if (reminderButton) {
+        $(remindersPanel).find('#add_reminder_box').empty();
+        // console.log(reminderButton);
+        // console.log(remindersPanel);
+        $(remindersPanel).find('#add_reminder_box').prepend(reminderButton);
+    }
 }
 
 // var buildReminder = function(message, time) {
@@ -603,7 +647,12 @@ var waitForMessages = function(callback) {
 
 var updateRemindersNotification = function(num) {
     console.log(num);
-    $('#reminders_noti').text(String(num));
+    if (num === 0) {
+        $('#reminders_noti').addClass('hidden');
+    } else {
+        $('#reminders_noti').removeClass('hidden');
+        $('#reminders_noti').text(String(num));
+    }
 }
 
 
